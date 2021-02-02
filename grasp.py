@@ -45,7 +45,9 @@ def RN(i, G, C):
 
     return costP-costN
 
-
+"""
+construction(G) prend en paramètre un graphe G, et renvoie une solution du clustering de G de facon a avoir un ensemble de clique 
+"""
 def construction(G):
     K = random.randint(1, 5)
     V = set()
@@ -104,9 +106,8 @@ def construction(G):
             for voisin in CL[k]:
                 if node != voisin and ((node, voisin) not in Edges and (voisin, node) not in Edges):
                     Edges.add((node, voisin))
-    
 
-    print(Edges)
+    return Edges
 
 
 def LocalSearch(G):
