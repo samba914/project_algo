@@ -31,8 +31,8 @@ def getEdgesList(G):
 """
 La fonction RN(i,G,C) prend en paramètre un sommet i,
 un graphe G et C qui est un sous ensemble de G
-Elle retourne costP-costN ou costN est le nombre de sommet avec qui i n'est pas voisin
-et costP le nombre de voisin de i
+Elle retourne costP-costN ou costN est le nombre de sommet avec qui i n'est pas voisin dans C
+et costP le nombre de voisin de i dans C
 """
 
 
@@ -41,7 +41,7 @@ def RN(i, G, C):
     for node in C:
         if node in G[i]:
             costP = costP+1
-    costN = len(G)-costP
+    costN = len(C)-costP
 
     return costP-costN
 
@@ -80,18 +80,20 @@ def construction(G):
         maxRn = RN(node, G, CL[selectedCl])
         lenCL = len(CL)
     
+
         for i in range(1, lenCL):
             if RN(node, G, CL[i]) > maxRn:
                 maxRn = RN(node, G, CL[i])
                 selectedCl = i
-
-        if maxRn == ((-1)*n):
+        #si d(node)=0 : node qui est le sommet en cours de traitement alors on met node dans un cluster à lui seul  
+        if len(G[node])==0:
             CL[lenCL] = list()
             CL[lenCL].append(node)
         else:
             CL[selectedCl].append(node)
     
     Edges = getEdgesList(G)
+    print(Edges)
     
 
     for k in range(len(CL)):
@@ -106,7 +108,10 @@ def construction(G):
             for voisin in CL[k]:
                 if node != voisin and ((node, voisin) not in Edges and (voisin, node) not in Edges):
                     Edges.add((node, voisin))
-
+    print(" ")                
+    print(CL)
+    print(" ")
+    print(Edges)
     return Edges
 
 
@@ -155,7 +160,7 @@ if __name__ == '__main__':
     for i in range(1, n+1):
         if i not in G.keys():
             G[i] = list()
-
+  
     # done
     if(len(G)>0):
         construction(G)
