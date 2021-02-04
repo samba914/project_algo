@@ -29,21 +29,39 @@ def getEdgesList(G):
 
 
 """
-La fonction RN(i,G,C) prend en paramètre un sommet i,
-un graphe G et C qui est un sous ensemble de G
-Elle retourne costP-costN ou costN est le nombre de sommet avec qui i n'est pas voisin dans C
-et costP le nombre de voisin de i dans C
+La fonction costP(i,G,C) prend en paramètre un sommet i,
+un graphe G et C qui est un sous ensemble de G 
+Elle renvoie costP, le nombre de voisin de i dans C
 """
 
-
-def RN(i, G, C):
+def costP(i,G,C):
     costP = 0
     for node in C:
         if node in G[i]:
             costP = costP+1
-    costN = len(C)-costP
+    return costP
 
-    return costP-costN
+"""
+La fonction costN(i,G,C) prend en paramètre un sommet i,
+un graphe G et C qui est un sous ensemble de G 
+Elle renvoie costN, le nombre de sommet avec qui i n'est pas voisin dans C 
+"""
+
+def costN(i,G,C):
+    costN = len(C)-costP(i,G,C)
+    return costN
+
+"""
+La fonction RN(i,G,C) prend en paramètre un sommet i,
+un graphe G et C qui est un sous ensemble de G
+Elle retourne costP-costN 
+"""
+
+def RN(i, G, C):
+    return costP(i,G,C)-costN(i,G,C)
+
+
+
 
 """
 construction(G) prend en paramètre un graphe G, et renvoie une solution du clustering de G de facon a avoir un ensemble de clique 
@@ -115,7 +133,9 @@ def construction(G):
     return Edges
 
 
-def LocalSearch(G):
+def LocalSearch(G,G1,CL):
+
+
     # fonction à implementer
     print("localsearch")
 
