@@ -384,8 +384,9 @@ if __name__ == '__main__':
 
     # done
     if(len(G) > 0):
-        
-        G1 = grasp(G, 10000)
+        # fonction pour laner le grasp: 
+        Tmax=300000  #5min
+        G1 = grasp(G, Tmax)
         solution=solutionCost(G, G1)
         for coupl in solution[1]:
             print(coupl[0],coupl[1])
